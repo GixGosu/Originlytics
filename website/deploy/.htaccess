@@ -1,0 +1,213 @@
+# OriginLytics.com - Apache .htaccess Configuration
+# Version: 1.0.0
+# Production-ready configuration for Apache servers
+
+# Enable RewriteEngine
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Redirect HTTP to HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Redirect www to non-www (or vice versa)
+    RewriteCond %{HTTP_HOST} ^www\.originlytics\.com [NC]
+    RewriteRule ^(.*)$ https://originlytics.com/$1 [L,R=301]
+
+    # Remove trailing slash (except for root)
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # SPA fallback - serve index.html for all non-file requests
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.html [L]
+</IfModule>
+
+# Security Headers
+<IfModule mod_headers.c>
+    # X-Frame-Options (prevent clickjacking)
+    Header always set X-Frame-Options "SAMEORIGIN"
+
+    # X-Content-Type-Options (prevent MIME sniffing)
+    Header always set X-Content-Type-Options "nosniff"
+
+    # X-XSS-Protection (legacy XSS protection)
+    Header always set X-XSS-Protection "1; mode=block"
+
+    # Referrer-Policy
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Permissions-Policy (formerly Feature-Policy)
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+
+    # Content-Security-Policy
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com; frame-ancestors 'self';"
+
+    # HSTS (HTTP Strict Transport Security)
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+    # Remove Server header (if possible)
+    Header unset Server
+    Header unset X-Powered-By
+</IfModule>
+
+# Compression
+<IfModule mod_deflate.c>
+    # Enable compression for text-based files
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+    AddOutputFilterByType DEFLATE application/xml application/xhtml+xml application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE font/truetype font/opentype application/vnd.ms-fontobject image/svg+xml
+
+    # Exclude old browsers
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+</IfModule>
+
+# Brotli Compression (if mod_brotli is available)
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css text/javascript
+    AddOutputFilterByType BROTLI_COMPRESS application/xml application/xhtml+xml application/rss+xml
+    AddOutputFilterByType BROTLI_COMPRESS application/javascript application/x-javascript application/json
+    AddOutputFilterByType BROTLI_COMPRESS font/truetype font/opentype application/vnd.ms-fontobject image/svg+xml
+</IfModule>
+
+# Caching - Browser Cache Control
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    # Default expiration: 1 hour
+    ExpiresDefault "access plus 1 hour"
+
+    # HTML (no caching)
+    ExpiresByType text/html "access plus 0 seconds"
+
+    # CSS and JavaScript (1 month)
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType application/x-javascript "access plus 1 month"
+
+    # Images (1 year)
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+
+    # Fonts (1 year)
+    ExpiresByType font/truetype "access plus 1 year"
+    ExpiresByType font/opentype "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
+
+    # Manifest and XML
+    ExpiresByType application/manifest+json "access plus 1 week"
+    ExpiresByType application/xml "access plus 0 seconds"
+    ExpiresByType text/xml "access plus 0 seconds"
+</IfModule>
+
+# Cache-Control Headers
+<IfModule mod_headers.c>
+    # HTML - No caching
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+
+    # CSS and JavaScript - Cache for 1 month
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "public, max-age=2592000, must-revalidate"
+    </FilesMatch>
+
+    # Images - Cache for 1 year
+    <FilesMatch "\.(jpg|jpeg|png|gif|ico|svg|webp|avif)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    # Fonts - Cache for 1 year with CORS
+    <FilesMatch "\.(woff|woff2|ttf|otf|eot)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+        Header set Access-Control-Allow-Origin "*"
+    </FilesMatch>
+</IfModule>
+
+# Protect sensitive files
+<FilesMatch "(^\.htaccess|^\.env|\.log|\.md|\.json|\.yml|\.yaml|composer\.(json|lock)|package(-lock)?\.json)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Disable directory browsing
+Options -Indexes
+
+# Prevent access to hidden files (starting with .)
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Custom error pages (if you create them)
+ErrorDocument 404 /index.html
+ErrorDocument 500 /index.html
+
+# Character encoding
+AddDefaultCharset UTF-8
+
+# Force UTF-8 for certain file types
+<IfModule mod_mime.c>
+    AddCharset UTF-8 .html .css .js .xml .json .webmanifest
+</IfModule>
+
+# MIME types
+<IfModule mod_mime.c>
+    # JavaScript
+    AddType application/javascript js mjs
+    AddType application/json json
+    AddType application/manifest+json webmanifest
+
+    # Media
+    AddType audio/mp4 m4a f4a f4b
+    AddType audio/ogg oga ogg opus
+    AddType video/mp4 mp4 m4v f4v f4p
+    AddType video/ogg ogv
+    AddType video/webm webm
+
+    # Images
+    AddType image/svg+xml svg svgz
+    AddType image/webp webp
+    AddType image/avif avif
+
+    # Fonts
+    AddType font/woff woff
+    AddType font/woff2 woff2
+    AddType font/ttf ttf
+    AddType font/otf otf
+    AddType application/vnd.ms-fontobject eot
+</IfModule>
+
+# PHP security (if PHP is used)
+<IfModule mod_php7.c>
+    php_flag display_errors Off
+    php_flag log_errors On
+    php_flag expose_php Off
+</IfModule>
+
+# Performance - Enable Keep-Alive
+<IfModule mod_headers.c>
+    Header set Connection keep-alive
+</IfModule>
+
+# ETags (disable for better caching)
+<IfModule mod_headers.c>
+    Header unset ETag
+</IfModule>
+FileETag None

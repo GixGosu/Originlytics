@@ -1,0 +1,21 @@
+# Python NLP and ML Dependencies for OriginLytics
+# Real statistical analysis and AI detection
+
+# Core NLP libraries
+nltk>=3.9.1
+textstat>=0.7.4
+scipy>=1.9.0
+
+# HuggingFace and PyTorch for AI models (CPU-only version)
+# Using CPU-only torch to save disk space (CUDA version is 2GB+)
+--index-url https://download.pytorch.org/whl/cpu
+torch==2.5.1+cpu
+transformers>=4.46.3
+tokenizers>=0.22.0,<=0.23.0
+
+# Detoxify for toxicity detection
+detoxify>=0.5.2
+
+# Additional utilities
+numpy>=1.24.0,<3.0.0
+sentencepiece>=0.2.0

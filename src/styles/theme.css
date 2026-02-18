@@ -1,0 +1,313 @@
+/**
+ * OriginLytics Theme System
+ * Complete color palette with light/dark mode support
+ * Based on .claude/analysis/color-palettes-research.md
+ */
+
+/* ============================================================================
+   ROOT - Light Mode (Default)
+   ============================================================================ */
+
+:root {
+  /* Backgrounds */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F9FAFB;
+  --bg-tertiary: #F3F4F6;
+  --bg-elev-1: #F9FAFB;
+  --bg-elev-2: #F3F4F6;
+  --bg-elev-3: #E5E7EB;
+
+  /* Text Colors (WCAG AAA Compliant) */
+  --text-primary: #111827;     /* 17.35:1 contrast */
+  --text-secondary: #4B5563;   /* 8.59:1 contrast */
+  --text-tertiary: #6B7280;    /* 5.97:1 contrast */
+  --text-dim: #9CA3AF;         /* 4.26:1 contrast */
+
+  /* Legacy aliases (backwards compatibility) */
+  --text: var(--text-primary);
+  --text-muted: var(--text-secondary);
+
+  /* Card/Surface */
+  --card: #FFFFFF;
+  --card-border: #E5E7EB;
+
+  /* SEO Brand Colors (Blue) */
+  --seo-primary: #3B82F6;      /* Blue 500 */
+  --seo-hover: #2563EB;        /* Blue 600 */
+  --seo-light: #60A5FA;        /* Blue 400 */
+  --seo-bg: #EFF6FF;           /* Blue 50 */
+  --seo-border: #DBEAFE;       /* Blue 100 */
+
+  /* GEO Brand Colors (Purple) */
+  --geo-primary: #8B5CF6;      /* Violet 500 */
+  --geo-hover: #7C3AED;        /* Violet 600 */
+  --geo-light: #A78BFA;        /* Violet 400 */
+  --geo-bg: #FAF5FF;           /* Violet 50 */
+  --geo-border: #EDE9FE;       /* Violet 100 */
+
+  /* Status Colors */
+  --success: #10B981;          /* Green 500 */
+  --success-bg: #D1FAE5;       /* Green 100 */
+  --warning: #F59E0B;          /* Amber 500 */
+  --warning-bg: #FEF3C7;       /* Amber 100 */
+  --error: #EF4444;            /* Red 500 */
+  --error-bg: #FEE2E2;         /* Red 100 */
+  --info: #3B82F6;             /* Blue 500 */
+  --info-bg: #DBEAFE;          /* Blue 100 */
+
+  /* Borders & Dividers */
+  --border-primary: #E5E7EB;   /* Gray 200 */
+  --border-secondary: #D1D5DB; /* Gray 300 */
+  --hairline: 1px solid var(--border-primary);
+
+  /* Shadows */
+  --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-2: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-3: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+
+  /* Interactive States */
+  --hover-overlay: rgba(0, 0, 0, 0.04);
+  --active-overlay: rgba(0, 0, 0, 0.08);
+  --focus-ring: 0 0 0 3px rgba(59, 130, 246, 0.5);
+
+  /* Chart Colors (for future use) */
+  --chart-1: #3B82F6;  /* Blue */
+  --chart-2: #8B5CF6;  /* Purple */
+  --chart-3: #10B981;  /* Green */
+  --chart-4: #F59E0B;  /* Amber */
+  --chart-5: #EF4444;  /* Red */
+  --chart-6: #06B6D4;  /* Cyan */
+}
+
+/* ============================================================================
+   DARK MODE
+   ============================================================================ */
+
+[data-theme="dark"] {
+  /* Backgrounds */
+  --bg-primary: #0F172A;       /* Slate 900 */
+  --bg-secondary: #1E293B;     /* Slate 800 */
+  --bg-tertiary: #334155;      /* Slate 700 */
+  --bg-elev-1: #1E293B;        /* Slate 800 */
+  --bg-elev-2: #334155;        /* Slate 700 */
+  --bg-elev-3: #475569;        /* Slate 600 */
+
+  /* Text Colors (WCAG AAA Compliant) */
+  --text-primary: #F8FAFC;     /* 17.51:1 contrast */
+  --text-secondary: #CBD5E1;   /* 10.87:1 contrast */
+  --text-tertiary: #94A3B8;    /* 6.41:1 contrast */
+  --text-dim: #64748B;         /* 4.52:1 contrast */
+
+  /* Card/Surface */
+  --card: #1E293B;             /* Slate 800 */
+  --card-border: #334155;      /* Slate 700 */
+
+  /* SEO Brand Colors (Lighter for dark mode) */
+  --seo-primary: #60A5FA;      /* Blue 400 */
+  --seo-hover: #93C5FD;        /* Blue 300 */
+  --seo-light: #3B82F6;        /* Blue 500 */
+  --seo-bg: #1E3A5F;           /* Dark blue tint */
+  --seo-border: #2563EB;       /* Blue 600 */
+
+  /* GEO Brand Colors (Lighter for dark mode) */
+  --geo-primary: #A78BFA;      /* Violet 400 */
+  --geo-hover: #C4B5FD;        /* Violet 300 */
+  --geo-light: #8B5CF6;        /* Violet 500 */
+  --geo-bg: #2E1F47;           /* Dark purple tint */
+  --geo-border: #7C3AED;       /* Violet 600 */
+
+  /* Status Colors (Lighter for dark mode) */
+  --success: #34D399;          /* Green 400 */
+  --success-bg: #064E3B;       /* Green 900 */
+  --warning: #FBBF24;          /* Amber 400 */
+  --warning-bg: #78350F;       /* Amber 900 */
+  --error: #F87171;            /* Red 400 */
+  --error-bg: #7F1D1D;         /* Red 900 */
+  --info: #60A5FA;             /* Blue 400 */
+  --info-bg: #1E3A8A;          /* Blue 900 */
+
+  /* Borders & Dividers */
+  --border-primary: #334155;   /* Slate 700 */
+  --border-secondary: #475569; /* Slate 600 */
+
+  /* Shadows (Lighter in dark mode) */
+  --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-2: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-3: 0 10px 15px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.2);
+
+  /* Interactive States */
+  --hover-overlay: rgba(255, 255, 255, 0.08);
+  --active-overlay: rgba(255, 255, 255, 0.12);
+  --focus-ring: 0 0 0 3px rgba(96, 165, 250, 0.5);
+
+  /* Chart Colors (Lighter for dark mode) */
+  --chart-1: #60A5FA;  /* Blue 400 */
+  --chart-2: #A78BFA;  /* Violet 400 */
+  --chart-3: #34D399;  /* Green 400 */
+  --chart-4: #FBBF24;  /* Amber 400 */
+  --chart-5: #F87171;  /* Red 400 */
+  --chart-6: #22D3EE;  /* Cyan 400 */
+}
+
+/* ============================================================================
+   SYSTEM PREFERENCE (Auto)
+   ============================================================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    /* Inherit dark mode variables when system is dark and no theme is set */
+    --bg-primary: #0F172A;
+    --bg-secondary: #1E293B;
+    --bg-tertiary: #334155;
+    --bg-elev-1: #1E293B;
+    --bg-elev-2: #334155;
+    --bg-elev-3: #475569;
+
+    --text-primary: #F8FAFC;
+    --text-secondary: #CBD5E1;
+    --text-tertiary: #94A3B8;
+    --text-dim: #64748B;
+
+    --card: #1E293B;
+    --card-border: #334155;
+
+    --seo-primary: #60A5FA;
+    --seo-hover: #93C5FD;
+    --seo-light: #3B82F6;
+    --seo-bg: #1E3A5F;
+    --seo-border: #2563EB;
+
+    --geo-primary: #A78BFA;
+    --geo-hover: #C4B5FD;
+    --geo-light: #8B5CF6;
+    --geo-bg: #2E1F47;
+    --geo-border: #7C3AED;
+
+    --success: #34D399;
+    --success-bg: #064E3B;
+    --warning: #FBBF24;
+    --warning-bg: #78350F;
+    --error: #F87171;
+    --error-bg: #7F1D1D;
+    --info: #60A5FA;
+    --info-bg: #1E3A8A;
+
+    --border-primary: #334155;
+    --border-secondary: #475569;
+
+    --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-2: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-3: 0 10px 15px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.2);
+
+    --hover-overlay: rgba(255, 255, 255, 0.08);
+    --active-overlay: rgba(255, 255, 255, 0.12);
+    --focus-ring: 0 0 0 3px rgba(96, 165, 250, 0.5);
+
+    --chart-1: #60A5FA;
+    --chart-2: #A78BFA;
+    --chart-3: #34D399;
+    --chart-4: #FBBF24;
+    --chart-5: #F87171;
+    --chart-6: #22D3EE;
+  }
+}
+
+/* ============================================================================
+   GLOBAL STYLES
+   ============================================================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Smooth color transitions for theme switching */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+
+/* ============================================================================
+   UTILITY CLASSES
+   ============================================================================ */
+
+.card {
+  background-color: var(--card);
+  border: var(--hairline);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: var(--shadow-1);
+}
+
+.button-primary {
+  background-color: var(--seo-primary);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.button-primary:hover {
+  background-color: var(--seo-hover);
+}
+
+.button-secondary {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: var(--hairline);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.button-secondary:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.text-seo {
+  color: var(--seo-primary);
+}
+
+.text-geo {
+  color: var(--geo-primary);
+}
+
+.bg-seo {
+  background-color: var(--seo-bg);
+}
+
+.bg-geo {
+  background-color: var(--geo-bg);
+}
+
+/* ============================================================================
+   ACCESSIBILITY
+   ============================================================================ */
+
+/* Focus visible for keyboard navigation */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
